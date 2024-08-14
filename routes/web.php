@@ -5,6 +5,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,6 +21,8 @@ Route::get('/dashboard', function () {
 Route::get('/patientform', [PatientController::class,'index'])->name('patient.form');
 Route::post('/patient/save',[PatientController::class,'save'])->name('patient.form.save');
 
+Route::get('/doctorlist',[PatientController::class,'doctorlist'])->name('doctors.list');
+
 Route::get('/doctordashboard', function () {
     return view('doctor.dashboard');
 })->middleware(['auth', 'verified'])->name('doctor.dashboard');
@@ -31,6 +34,14 @@ Route::post('/doctordashboard/update/{id}', [DoctorController::class,'update'])-
 //     return view('doctor.form');
 // })->middleware(['auth', 'verified'])->name('doctor.form');
 
+//for appointment
+Route::get('/appointment/form/{id}',[AppointmentController::class,'index'])->name('appointment.form');
+Route::post('/appointment/form/save',[AppointmentController::class,'store'])->name('appointment.store');
+
+//my appointments
+Route::get('/appointments/list/',[AppointmentController::class,'list'])->name('appointment.list');
+
+Route::get('/appointment/cancel/{id}',[AppointmentController::class,'cancel'])->name('appointment.cancel');
 
 Route::get('/doctor_form', [DepartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('doctor.form');
 

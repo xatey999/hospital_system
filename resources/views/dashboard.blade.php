@@ -44,30 +44,18 @@
             <div class="position-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="{{route('dashboard')}}">
+                        <a class="nav-link active text-white" aria-current="page" href="{{route('appointment.list')}}">
                             <i class="fas fa-tachometer-alt"></i> My Appointments
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="">
+                        <a class="nav-link text-white" href="{{route('doctors.list')}}">
                             <i class="fas fa-box"></i>Doctor's List
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="">
-                            <i class="fas fa-tags"></i> Products
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="fas fa-users"></i> Customers
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">
-                            <i class="fas fa-chart-line"></i> Reports
-                        </a>
-                    </li>
+                    
+                    
+                    
                 </ul>
             </div>
         </nav>
@@ -77,7 +65,7 @@
             <!-- Top Navigation -->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Dashboard</a>
+                    <a class="navbar-brand" href="{{route('dashboard')}}">Dashboard</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
