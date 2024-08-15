@@ -39,6 +39,9 @@
                             <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Appointments</a>
                         </li>
                         <li>
+                            <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Schedules</a>
+                        </li>
+                        <li>
                             <form method="POST" action="{{ route('logout') }}" class="mt-4">
                                 @csrf
                                 <button type="submit" class="w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Logout</button>
