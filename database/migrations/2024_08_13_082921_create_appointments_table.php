@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('patient_id');
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
+            $table->foreignId('doctor_id');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
             $table->dateTime('appointment_date');
             $table->text('appointment_reason');
             $table->timestamps();

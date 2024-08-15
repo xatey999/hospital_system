@@ -21,6 +21,8 @@ Route::get('/dashboard', function () {
 Route::get('/patientform', [PatientController::class,'index'])->name('patient.form');
 Route::post('/patient/save',[PatientController::class,'save'])->name('patient.form.save');
 
+
+//for doctor
 Route::get('/doctorlist',[PatientController::class,'doctorlist'])->name('doctors.list');
 
 Route::get('/doctordashboard', function () {
@@ -30,6 +32,7 @@ Route::get('/doctordashboard', function () {
 Route::get('/doctordashboard/profile/{id}', [DoctorController::class,'profile'])->name('doctor.profile');
 Route::post('/doctordashboard/update/{id}', [DoctorController::class,'update'])->name('doctor.update');
 
+Route::get('/appointment/list', [DoctorController::class,'appointment'])->name('doctor.appointment.list');
 // Route::get('/doctorform', function () {
 //     return view('doctor.form');
 // })->middleware(['auth', 'verified'])->name('doctor.form');

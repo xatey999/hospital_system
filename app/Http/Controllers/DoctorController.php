@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidationRequest;
 use App\Models\Doctor;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
@@ -44,5 +45,11 @@ class DoctorController extends Controller
         // $doctor_Data->user_id = $request->user_id;
         $doctor_Data->save();
         return redirect()->route("doctor.dashboard")->with("success","Doctor data updated successfully!");
+    }
+
+    public function appointment(){
+        $appointment_Data =  Appointment::query()->where('doctor_id', '=', Auth::user()->doctors->id)->with(['patient'])->get();
+        // dd($appointment_Data);
+        return view('doctor.appointments', compact('appointment_Data'));
     }
 }

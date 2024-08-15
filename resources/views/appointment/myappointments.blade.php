@@ -44,7 +44,7 @@
             <div class="position-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="{{route('dashboard')}}">
+                        <a class="nav-link active text-white" aria-current="page" href="{{route('appointment.list')}}">
                             <i class="fas fa-tachometer-alt"></i> My Appointments
                         </a>
                     </li>
@@ -84,12 +84,13 @@
             
             <!-- Main Content Area -->
             <h2>Your Appointments</h2>
-<table class="table">
-    <thead>
-        <tr>
+            <table class="table">
+         <thead>
+             <tr>
             <th>SN</th>
-            <th>Doctor</th>
-            <th>Appointment Date</th>
+            {{-- <th>Patient id</th> --}}
+            <th>Doctor Name</th>
+            <th>Appointment Date-Time</th>
             <th>Appointment Cause</th>
             <th>Action</th>
         </tr>
@@ -98,11 +99,12 @@
         @forelse($appointment_Data as $appointment_Data)
             <tr>
                 <th scope="row">{{ $loop->iteration }}</th>
-                <td>{{ $appointment_Data->patient_id }}</td>
-                {{-- <td>{{ $appointment_Data->doctors->doctor_name }}</td> --}}
+                {{-- <td>{{ $appointment_Data->patient_id }}</td> --}}
+                {{-- <td>{{ $appointment_Data->doctors ? $appointment->doctors->doctor_name : 'Doctor not found' }}</td> --}}
+                <td>{{ $appointment_Data->doctors->doctor_name }}</td>
                 <td>{{ $appointment_Data->appointment_date }}</td>
                 <td>{{ $appointment_Data->appointment_reason }}</td>
-                <td><a href="{{ route('appointment.cancel',['id'=>$appointment_Data->id]) }}" class="btn btn-danger btn-lg show_confirm " onclick="return confirm('Are you sure you want to delete this?');" style="font-size: 1.1rem;">
+                <td><a href="{{ route('appointment.cancel',['id'=>$appointment_Data->id]) }}" class="btn btn-danger btn-lg show_confirm " onclick="return confirm('Are you sure you want to cancel this?');" style="font-size: 1.1rem;">
                     <i class="fa-regular fa-rectangle-xmark"></i>  Cancel Appointment</a>
                 </td>
             </tr>

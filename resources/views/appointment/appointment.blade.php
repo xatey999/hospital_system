@@ -96,6 +96,11 @@
                         @endforeach
                 </div>
 
+                <!-- For doctor id -->
+                <div class="form-group">
+                <input id="doctor_id" name="doctor_id" type="hidden" class="form-control"  value="{{ $doctor_Data->id }}">
+            </div>
+
                     <!-- Appointment Date -->
                     <div class="form-group">
                         <label for="name">Appointment Date and Time </label>

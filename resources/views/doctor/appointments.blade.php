@@ -47,10 +47,36 @@
                 </nav>
 
                 <!-- Content Area -->
-                <div class="w-3/4 bg-white shadow-md p-4 ml-4">
+                <div class="w-3/4 bg-dark shadow-md p-8 ml-10">
                     <!-- Add your content here -->
-                    <h2 class="text-xl font-semibold">Welcome doctor {{auth()->user()->name}}</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-gray-800 text-white border border-gray-700 rounded-lg">
+                            <thead class="bg-gray-700">
+                               
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 text-left border-b border-gray-600">SN</th>
+                                    <th scope="col" class="py-3 px-6 text-left border-b border-gray-600">Patient Name</th>
+                                    <th scope="col" class="py-3 px-6 text-left border-b border-gray-600">Patient's Address</th>
+                                    <th scope="col" class="py-3 px-6 text-left border-b border-gray-600">Appointment Date</th>
+                                    <th scope="col" class="py-3 px-6 text-left border-b border-gray-600">Appointment Reason</th>
+                                    {{-- <th scope="col" class="py-3 px-6 text-left border-b border-gray-600">Handle</th> --}}
+                                </tr>
+                            </thead>
+                            @foreach($appointment_Data as $appointment_Data)
+                            <tbody>
+                                <tr class="bg-gray-800 hover:bg-gray-700">
+                                    <th scope="row" class="py-4 px-6 border-b border-gray-600">{{ $loop->iteration }}</th>
+                                    <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->patient->user->name }}</td>
+                                    <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->patient->address }}</td>
+                                    <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->appointment_date }}</td>
+                                    <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->appointment_reason }}</td>
+                                </tr>
+                            </tbody>
+                            @endforeach
+                        </table>
+                    </div>
                 </div>
+                
             </div>
         </div>
     </main>

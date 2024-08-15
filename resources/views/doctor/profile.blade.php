@@ -33,10 +33,10 @@
                 <nav class="w-1/4 bg-white shadow-md p-4">
                     <ul>
                         <li>
-                            <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Profile</a>
+                            <a href="{{ route('doctor.profile', ['id' => auth()->user()->id]) }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Profile</a>
                         </li>
                         <li>
-                            <a href="" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Appointments</a>
+                            <a href="{{ route('doctor.appointment.list') }}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Appointments</a>
                         </li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}" class="mt-4">
