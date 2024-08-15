@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -32,6 +33,12 @@ Route::get('/doctordashboard', function () {
 Route::get('/doctordashboard/profile/{id}', [DoctorController::class,'profile'])->name('doctor.profile');
 Route::post('/doctordashboard/update/{id}', [DoctorController::class,'update'])->name('doctor.update');
 
+
+//for schedules
+Route::resource('schedules', ScheduleController::class);
+
+
+//for appointment
 Route::get('/appointment/list', [DoctorController::class,'appointment'])->name('doctor.appointment.list');
 // Route::get('/doctorform', function () {
 //     return view('doctor.form');
