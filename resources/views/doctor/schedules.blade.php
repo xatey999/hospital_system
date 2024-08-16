@@ -35,7 +35,7 @@
                 <div class="mt-4 flex justify-between">
                     <!-- Edit Button -->
                     <a
-                        href=""
+                        href="{{ route('schedules.edit', $schedules->id) }}"
                         class="inline-block rounded-md bg-blue-600 px-4 py-2 text-white font-semibold transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                         Edit

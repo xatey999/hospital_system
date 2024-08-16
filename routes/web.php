@@ -36,6 +36,7 @@ Route::post('/doctordashboard/update/{id}', [DoctorController::class,'update'])-
 
 //for schedules
 Route::resource('schedules', ScheduleController::class);
+Route::post('/schedules/update/{id}', [ScheduleController::class,'update'])->name('schedules.update');
 
 
 //for appointment
