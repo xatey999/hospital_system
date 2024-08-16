@@ -31,7 +31,7 @@
                 <nav class="flex justify-center space-x-4">
                     <a href="{{ route('doctor.profile', ['id' => auth()->user()->id]) }}" class="py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Profile</a>
                     <a href="{{ route('doctor.appointment.list') }}" class="py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Appointments</a>
-                    <a href="#" class="py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Schedules</a>
+                    <a href="{{ route('schedules.index') }}" class="py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Schedules</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Logout</button>

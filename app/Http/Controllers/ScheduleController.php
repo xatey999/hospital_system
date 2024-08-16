@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Schedule;
+
 class ScheduleController extends Controller
 {
     /**
@@ -11,7 +13,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return view("doctor.schedules");
+        $schedules = Schedule::all();
+        return view("doctor.schedules", compact("schedules"));
     }
 
     /**
@@ -19,7 +22,8 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        return view("doctor.addschedule");
+       
     }
 
     /**
@@ -27,7 +31,11 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $schedule = new Schedule();
+        $schedule->doctor_id = auth()->user()->doctors->id;
+        $schedule->fill($request->all());
+        $schedule->save();
+        return redirect()->route("schedules.index")->with("success","New schedule added!!");
     }
 
     /**
