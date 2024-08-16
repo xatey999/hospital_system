@@ -21,7 +21,9 @@
                                     <th scope="row" class="py-4 px-6 border-b border-gray-600">{{ $loop->iteration }}</th>
                                     <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->patient->user->name }}</td>
                                     <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->patient->address }}</td>
-                                    <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->appointment_date }}</td>
+                                    <td class="py-4 px-6 border-b border-gray-600">
+                                        {{ \Carbon\Carbon::parse($appointment_Data->appointment_date)->format('l, F j') }} {{ \Carbon\Carbon::parse($appointment_Data->appointment_date)->format('g:i A') }}
+                                    </td>
                                     <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->appointment_reason }}</td>
                                 </tr>
                             </tbody>

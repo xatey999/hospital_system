@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Schedule;
+use Illuminate\Support\Facades\Auth;
+
 
 class ScheduleController extends Controller
 {
@@ -13,7 +15,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::all();
+        //schedules list as per the logged in doctor
+        $schedules = Schedule::query()->where('doctor_id', '=', Auth::user()->doctors->id)->get();
         return view("doctor.schedules", compact("schedules"));
     }
 
