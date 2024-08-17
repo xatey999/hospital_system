@@ -1,116 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor's list</title>
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Custom Dark Theme CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/darkly/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Custom Styles for Sidebar */
-        .sidebar {
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding-top: 1rem;
-        }
-        .nav-link:hover {
-            background-color: #444 !important;
-            border-radius: 5px;
-        }
-        .navbar-brand {
-            font-weight: bold;
-        }
-        .content {
-            margin-top: 2rem;
-        }
-        /* Custom hover effect for sidebar links */
-        .nav-link {
-            transition: background-color 0.2s ease;
-        }
-    </style>
-</head>
-<body class="bg-dark text-white">
+@extends('patient.master')
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-3 col-lg-2 bg-dark sidebar">
-            <div class="position-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="{{route('appointment.list')}}">
-                            <i class="fas fa-tachometer-alt"></i> My Appointments
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{route('doctors.list')}}">
-                            <i class="fas fa-box"></i>Doctor's List
-                        </a>
-                    </li>
-                   
-                   
-                </ul>
+@section('content')
+
+<div class="bg-gray-900">
+    <!-- Main Content Area -->
+    <div class="flex flex-col items-center pt-6">
+        <!-- Filter Form -->
+        <form action="" method="GET" class="mb-6">
+            <div class="flex items-center">
+                <label for="department" class="text-white mr-4">Filter by Department:</label>
+                <select id="department" name="department" class="bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2">
+                    <option value="">All Departments</option>
+                    @foreach($doctor_Data->unique('department_id') as $doctor)
+                        <option value="{{ $doctor->department->id }}" {{ request('department') == $doctor->department->id ? 'selected' : '' }}>
+                            {{ $doctor->department->name }}
+                        </option>
+                    @endforeach
+                </select>
+                <button type="submit" class="ml-4 btn btn-primary text-white">Filter</button>
             </div>
-        </nav>
+        </form>
 
-        <!-- Main content -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <!-- Top Navigation -->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="{{route('dashboard')}}">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('profile.edit')}}"><i class="fas fa-user"></i> Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('logout')}}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <!-- Main Content Area -->
-            <table class="table">
+        <div class="w-full lg:w-3/4 xl:w-2/3 p-6">
+            <table class="table-auto w-full bg-black text-white shadow-md rounded-lg">
                 <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Doctor Name</th>
-                    <th scope="col">Department</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Action</th>
-                  </tr>
+                    <tr>
+                        <th scope="col" class="px-4 py-2">#</th>
+                        <th scope="col" class="px-4 py-2">Doctor Name</th>
+                        <th scope="col" class="px-4 py-2">Department</th>
+                        <th scope="col" class="px-4 py-2">Description</th>
+                        <th scope="col" class="px-4 py-2">Action</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    @foreach ($doctor_Data as $doctor_Data)
-                  <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $doctor_Data->doctor_name }}</td>
-                    <td>{{ $doctor_Data->department->name }}</td>
-                    <td>{{ $doctor_Data->doctor_description }}</td>
-                    <td><a href="{{ route('appointment.form', ['id'=>$doctor_Data->id]) }}" class="btn btn-primary btn-lg" style="font-size: 1.1rem;">
-                        <i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
-                    </td>
-                  </tr>
-                  @endforeach
+                    @foreach ($doctor_Data as $doctor)
+                    <tr class="border-b border-gray-700">
+                        <th scope="row" class="px-4 py-2">{{ $loop->iteration }}</th>
+                        <td class="px-4 py-2">{{ $doctor->doctor_name }}</td>
+                        <td class="px-4 py-2">{{ $doctor->department->name }}</td>
+                        <td class="px-4 py-2">{{ $doctor->doctor_description }}</td>
+                        <td class="px-4 py-2">
+                            <a href="{{ route('appointment.form', ['id' => $doctor->id]) }}" class="btn btn-primary text-white text-lg inline-flex items-center">
+                                <i class="fa-solid fa-calendar-check mr-2"></i> Book Appointment
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
                 </tbody>
-              </table>
-        </main>
+            </table>
+        </div>
     </div>
 </div>
 
-<!-- Bootstrap JS CDN -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection
