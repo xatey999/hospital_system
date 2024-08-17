@@ -17,7 +17,9 @@
                         </option>
                     @endforeach
                 </select>
-                <button type="submit" class="ml-4 btn btn-primary text-white">Filter</button>
+                <button type="submit" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
+                    Filter
+                </button>
             </div>
         </form>
 
@@ -40,10 +42,10 @@
                         <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->department->name }}</td>
                         <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->doctor_description }}</td>
                         <td class="px-6 py-4 text-sm font-medium">
-                            <a href="{{ route('appointment.form', ['id' => $doctor->id]) }}" class="text-blue-600 hover:text-blue-900 inline-flex items-center">
+                            <a href="{{ route('appointment.form', ['id' => $doctor->id]) }}" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg inline-flex items-center hover:bg-blue-700 hover:shadow-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                                 <i class="fa-solid fa-calendar-check mr-2"></i> Book Appointment
                             </a>
-                        </td>
+                        </td>                        
                     </tr>
                     @endforeach
                 </tbody>
