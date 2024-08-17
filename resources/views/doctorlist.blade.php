@@ -21,26 +21,26 @@
             </div>
         </form>
 
-        <div class="w-full lg:w-3/4 xl:w-2/3 p-6">
-            <table class="table-auto w-full bg-black text-white shadow-md rounded-lg">
-                <thead>
+        <div class="w-full lg:w-3/4 xl:w-2/3 p-6 bg-white shadow-md rounded-lg">
+            <table class="min-w-full bg-white text-gray-800 shadow-md rounded-lg divide-y divide-gray-200">
+                <thead class="bg-gray-100 text-gray-800">
                     <tr>
-                        <th scope="col" class="px-4 py-2">#</th>
-                        <th scope="col" class="px-4 py-2">Doctor Name</th>
-                        <th scope="col" class="px-4 py-2">Department</th>
-                        <th scope="col" class="px-4 py-2">Description</th>
-                        <th scope="col" class="px-4 py-2">Action</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">#</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Doctor Name</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Department</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Description</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($doctor_Data as $doctor)
-                    <tr class="border-b border-gray-700">
-                        <th scope="row" class="px-4 py-2">{{ $loop->iteration }}</th>
-                        <td class="px-4 py-2">{{ $doctor->doctor_name }}</td>
-                        <td class="px-4 py-2">{{ $doctor->department->name }}</td>
-                        <td class="px-4 py-2">{{ $doctor->doctor_description }}</td>
-                        <td class="px-4 py-2">
-                            <a href="{{ route('appointment.form', ['id' => $doctor->id]) }}" class="btn btn-primary text-white text-lg inline-flex items-center">
+                    <tr>
+                        <th scope="row" class="px-6 py-4 text-sm font-medium text-gray-900">{{ $loop->iteration }}</th>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->doctor_name }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->department->name }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->doctor_description }}</td>
+                        <td class="px-6 py-4 text-sm font-medium">
+                            <a href="{{ route('appointment.form', ['id' => $doctor->id]) }}" class="text-blue-600 hover:text-blue-900 inline-flex items-center">
                                 <i class="fa-solid fa-calendar-check mr-2"></i> Book Appointment
                             </a>
                         </td>
@@ -49,6 +49,8 @@
                 </tbody>
             </table>
         </div>
+        
+        
     </div>
 </div>
 
