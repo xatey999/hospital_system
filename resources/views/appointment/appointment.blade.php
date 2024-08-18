@@ -15,23 +15,76 @@
                 <input id="doctor_id" name="doctor_id" type="hidden" class="form-control" value="{{ $doctor_Data->id }}">
             </div>
 
-            <!-- Appointment Date -->
-            <div class="form-group mb-4">
-                <label for="appointment_date" class="block text-sm font-medium text-gray-700">Appointment Date and Time</label>
-                <input id="appointment_date" type="datetime-local" name="appointment_date" class="form-control mt-1 block w-full text-black border border-gray-300 rounded-md py-2 px-3" value="{{ old('appointment_date') }}">
-                @error('appointment_date')
-                    <span class="error-message text-red-600 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
+           <!-- Appointment Date -->
+<div class="form-group mb-4">
+    <label for="appointment_date" class="block text-sm font-medium text-gray-700">Appointment Date and Time</label>
+    <input id="appointment_date" type="date" name="appointment_date" class="form-control mt-1 block w-full text-black border border-gray-300 rounded-md py-2 px-3" value="{{ old('appointment_date') }}">
+    @error('appointment_date')
+        <span class="error-message text-red-600 text-sm">{{ $message }}</span>
+    @enderror
+</div>
 
-            <!-- Appointment Reason -->
-            <div class="form-group mb-4">
-                <label for="appointment_reason" class="block text-sm font-medium text-gray-700">Appointment Reason</label>
-                <input id="appointment_reason" type="text" name="appointment_reason" class="form-control mt-1 block w-full text-black border border-gray-300 rounded-md py-2 px-3" placeholder="e.g., Regular checkup" value="{{ old('appointment_reason') }}">
-                @error('appointment_reason')
-                    <span class="error-message text-red-600 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
+<!-- Schedules -->
+<div class="form-group mb-4">
+    <label for="schedule" class="block text-sm font-medium text-gray-700">Available Schedules</label>
+    <div id="schedule-list">
+        <p class="text-gray-500">Select a date to see available schedules.</p>
+    </div>
+    @error('day')
+        <span class="error-message text-red-600 text-sm">{{ $message }}</span>
+    @enderror
+</div>
+
+<!-- Appointment Reason -->
+<div class="form-group mb-4">
+    <label for="appointment_reason" class="block text-sm font-medium text-gray-700">Appointment Reason</label>
+    <input id="appointment_reason" type="text" name="appointment_reason" class="form-control mt-1 block w-full text-black border border-gray-300 rounded-md py-2 px-3" placeholder="e.g., Regular checkup" value="{{ old('appointment_reason') }}">
+    @error('appointment_reason')
+        <span class="error-message text-red-600 text-sm">{{ $message }}</span>
+    @enderror
+</div>
+
+<!-- JavaScript to handle filtering and displaying schedules -->
+<script>
+    document.getElementById('appointment_date').addEventListener('change', function() {
+    const selectedDate = new Date(this.value);
+    const selectedDay = selectedDate.toLocaleString('en-US', { weekday: 'long' });
+
+    const schedules = @json($doctor_Data->schedules); // Pass schedules data from Blade to JavaScript
+    
+    // Filter schedules by the selected day
+    const filteredSchedules = schedules.filter(schedule => schedule.day === selectedDay);
+
+    // Display filtered schedules
+    const scheduleList = document.getElementById('schedule-list');
+    scheduleList.innerHTML = ''; // Clear previous schedules
+
+    if (filteredSchedules.length > 0) {
+        filteredSchedules.forEach(schedule => {
+            const scheduleItem = document.createElement('input');
+            scheduleItem.type = 'text';
+            scheduleItem.name = 'day';
+            scheduleItem.className = 'form-control mt-1 block w-full text-black border border-gray-300 rounded-md py-2 px-3';
+            const startTime12 = formatTime24to12(schedule.start_time); // Convert start time to 12-hour format
+            const endTime12 = formatTime24to12(schedule.end_time);     // Convert end time to 12-hour format
+            scheduleItem.value = `${startTime12} - ${endTime12}`;
+            scheduleItem.readOnly = true;
+            scheduleList.appendChild(scheduleItem);
+        });
+    } else {
+        scheduleList.innerHTML = '<p class="text-gray-500">No schedules available for the selected day.</p>';
+    }
+});
+
+// Function to convert 24-hour time to 12-hour time with AM/PM
+function formatTime24to12(time) {
+    let [hours, minutes] = time.split(':');
+    hours = parseInt(hours);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Convert to 12-hour format, 0 becomes 12
+    return `${hours}:${minutes} ${period}`;
+}
+</script>
 
             <!-- Submit Button -->
             <div class="form-group">

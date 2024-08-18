@@ -7,13 +7,15 @@ use App\Models\Appointment;
 use App\Models\Patients;
 use App\Models\Doctor;
 use App\Models\Department;
+use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
     public function index($id)
     {
-        $doctor_Data = Doctor::findOrFail($id);
+        $doctor_Data = Doctor::with('schedules')->findOrFail($id);
+        
         // dd($doctor_Data);
         $patient = Patients::all();
         // dd($doctor_Data, $patient);
