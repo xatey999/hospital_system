@@ -6,13 +6,13 @@
         @csrf
 
         <!-- Doctor Name -->
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="name">Doctor Name</label>
             <input id="doctor_name" type="text" name="doctor_name" class="form-control" value="{{ old('name') }}" >
             @error('name')
                 <span class="error-message">{{ $message }}</span>
             @enderror
-        </div>
+        </div> --}}
 
         <!-- Doctor Description -->
         <div class="form-group">
