@@ -5,14 +5,23 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    </a>
+                    @if(auth()->user()->role === 'doctor')
+                        <a href="{{ route('doctor.dashboard') }}">
+                            <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        </a>
+                    @else
+                        <a href="{{ route('dashboard') }}">
+                            <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        </a>
+                    @endif
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link 
+                        :href="auth()->user()->role === 'doctor' ? route('doctor.dashboard') : route('dashboard')" 
+                        :active="request()->routeIs(auth()->user()->role === 'doctor' ? 'doctor.dashboard' : 'dashboard')"
+                    >
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>

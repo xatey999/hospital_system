@@ -22,7 +22,6 @@ class ValidationRequest extends FormRequest
     public function rules(): array
     { 
         return [
-            'doctor_name'=>'required|string|max:255',
             'doctor_description'=>'required|max:255',
             'doctor_phone'=>'required|min:10',
 

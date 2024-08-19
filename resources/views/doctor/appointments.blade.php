@@ -12,6 +12,7 @@
                                     <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Patient Name</th>
                                     <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Patient's Address</th>
                                     <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Appointment Date</th>
+                                    <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Appointment Time</th>
                                     <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Appointment Reason</th>
                                 </tr>
                             </thead>
@@ -22,7 +23,10 @@
                                     <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->patient->user->name }}</td>
                                     <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->patient->address }}</td>
                                     <td class="py-4 px-6 border-b border-gray-600">
-                                        {{ \Carbon\Carbon::parse($appointment_Data->appointment_date)->format('l, F j') }} {{ \Carbon\Carbon::parse($appointment_Data->appointment_date)->format('g:i A') }}
+                                        {{ \Carbon\Carbon::parse($appointment_Data->appointment_date)->format('l, F j') }}
+                                    </td>
+                                    <td class="py-4 px-6 border-b border-gray-600">
+                                        {{ \Carbon\Carbon::parse($appointment_Data->appointment_time)->format('g:i A') }}
                                     </td>
                                     <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->appointment_reason }}</td>
                                 </tr>

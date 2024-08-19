@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ValidationRequest;
 use App\Models\Doctor;
 use App\Models\Appointment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +28,8 @@ class DoctorController extends Controller
     }
 
     public function edit($id){
-        $doctor_Data = Doctor::where('user_id', '=', $id)->first();
+        $doctor_Data = Doctor::where('user_id', '=', $id)->with('user')->first();
+        
         // dd($doctor_Data);
         return view('doctor.update', compact('doctor_Data'));
     }
@@ -37,7 +39,8 @@ class DoctorController extends Controller
         if (!$doctor_Data) {
             return redirect()->route("doctor.profile")->with("error", "Doctor not found.");
         }
-        $doctor_Data-> doctor_name = $request->input('doctor_name');
+        
+        // $doctor_Data-> doctor_name = $request->input('doctor_name');
         $doctor_Data-> doctor_description = $request->input('doctor_description');
         $doctor_Data-> doctor_phone = $request->input('doctor_phone');
         // dd($doctor_Data);

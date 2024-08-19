@@ -4,14 +4,19 @@
 
                 <!-- Content Area -->
                 <div class="w-3/4 bg-white shadow-lg p-8 mx-auto rounded-xl">
+                    <a href="{{ route('profile.edit') }}" class="inline-block bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                        Profile
+                    </a> <br>
+                    
+
                     <form method="POST" action="/doctordashboard/update/{{$doctor_Data->id}}" enctype="multipart/form-data">
                         @csrf
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
+                            {{-- <div>
                                 <label for="doctor_name" class="block text-lg font-medium text-gray-700 mb-2">Name:</label>
-                                <input type="text" id="doctor_name" name="doctor_name" placeholder="Doctor Name" value="{{ $doctor_Data->doctor_name }}"
+                                <input type="text" id="name" name="name" placeholder="Doctor Name" value="{{ $doctor_Data->user->name }}"
                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
+                            </div> --}}
                             <div>
                                 <label for="doctor_description" class="block text-lg font-medium text-gray-700 mb-2">Description:</label>
                                 <input type="text" id="doctor_description" name="doctor_description" placeholder="Doctor Description" value="{{ $doctor_Data->doctor_description }}"
