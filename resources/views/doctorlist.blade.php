@@ -38,7 +38,7 @@
                     @foreach ($doctor_Data as $doctor)
                     <tr>
                         <th scope="row" class="px-6 py-4 text-sm font-medium text-gray-900">{{ $loop->iteration }}</th>
-                        <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->doctor_name }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->user->name }}</td>
                         <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->department->name }}</td>
                         <td class="px-6 py-4 text-sm text-gray-600">{{ $doctor->doctor_description }}</td>
                         <td class="px-6 py-4 text-sm font-medium">
