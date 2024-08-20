@@ -14,6 +14,7 @@
                                     <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Appointment Date</th>
                                     <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Appointment Time</th>
                                     <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Appointment Reason</th>
+                                    <th scope="col" class="py-3 px-6 text-left font-semibold uppercase tracking-wider border-b border-gray-600">Action</th>
                                 </tr>
                             </thead>
                             @foreach($appointment_Data as $appointment_Data)
@@ -29,6 +30,11 @@
                                         {{ \Carbon\Carbon::parse($appointment_Data->appointment_time)->format('g:i A') }}
                                     </td>
                                     <td class="py-4 px-6 border-b border-gray-600">{{ $appointment_Data->appointment_reason }}</td>
+                                    <td>
+                                    <a href="{{ route('appointment.reschedule',['id'=> $appointment_Data->id]) }}" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300 ease-in-out">
+                                        Reschedule
+                                    </a>
+                                    </td>
                                 </tr>
                             </tbody>
                             @endforeach

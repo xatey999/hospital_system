@@ -55,4 +55,17 @@ class DoctorController extends Controller
         // dd($appointment_Data);
         return view('doctor.appointments', compact('appointment_Data'));
     }
+
+    public function reschedulePage($id){
+        $appointment_Data = Appointment::find($id);
+        return view('doctor.appointment.reschedule', compact('appointment_Data'));
+    }
+
+    public function reschedule(Request $request, $id){
+        $appointment_Data = Appointment::find($id);
+        $appointment_Data-> appointment_date = $request->input('appointment_date');
+        $appointment_Data-> appointment_time = $request->input('appointment_time');
+        $appointment_Data->save();
+        return redirect()->route('doctor.appointment.list')->with('success', 'Appointment rescheduled successfully!!');
+    }
 }

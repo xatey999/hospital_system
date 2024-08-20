@@ -82,6 +82,8 @@ Route::post('/schedules/update/{id}', [ScheduleController::class,'update'])->nam
 
 //for appointment list in doctor's view
 Route::get('/appointment/list', [DoctorController::class,'appointment'])->name('doctor.appointment.list');
+Route::get('/appointment/edit/{id}', [DoctorController::class,'reschedulePage'])->name('appointment.reschedule');
+Route::patch('/appointment/reschedule/{id}', [DoctorController::class,'reschedule'])->name('appointment.rescheudle.update');
 
 
 Route::get('/doctor_form', [DepartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('doctor.form');
