@@ -25,6 +25,7 @@ class PatientController extends Controller
 
     public function doctorlist(Request $request)
 {
+    $page_number = 10;
     $query = Doctor::with('department');
 
     // Filter by department if selected
@@ -32,7 +33,7 @@ class PatientController extends Controller
         $query->where('department_id', $request->department);
     }
 
-    $doctor_Data = $query->get();
+    $doctor_Data = $query->paginate($page_number);
     
     return view('doctorlist', compact('doctor_Data'));
 }

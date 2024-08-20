@@ -49,6 +49,7 @@
                     </tr>
                     @endforeach
                 </tbody>
+                {{ $doctor_Data->links() }}
             </table>
         </div>
         
