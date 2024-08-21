@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Patients;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
+    use AuthorizesRequests;
     public function index($id)
     {
         $doctor_Data = Doctor::with('schedules')->findOrFail($id);
@@ -26,6 +28,9 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
+
+        $user = Auth::user();
+        $this->authorize('create', Appointment::class);
 
         $appointment = new Appointment();
         $appointment->fill($request->all());
