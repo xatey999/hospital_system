@@ -23,14 +23,11 @@ class DoctorController extends Controller
     {
         $loginId = Auth::user()->id;
         $doctor_Data = Doctor::where('user_id', '=', $loginId)->get();
-        // dd($doctor_Data);
         return view('doctor.profile', compact('doctor_Data'));
     }
 
     public function edit($id){
         $doctor_Data = Doctor::where('user_id', '=', $id)->with('user')->first();
-        
-        // dd($doctor_Data);
         return view('doctor.update', compact('doctor_Data'));
     }
 
@@ -43,16 +40,12 @@ class DoctorController extends Controller
         // $doctor_Data-> doctor_name = $request->input('doctor_name');
         $doctor_Data-> doctor_description = $request->input('doctor_description');
         $doctor_Data-> doctor_phone = $request->input('doctor_phone');
-        // dd($doctor_Data);
-        // $doctor_Data->department_id = $request->department_id;
-        // $doctor_Data->user_id = $request->user_id;
         $doctor_Data->save();
         return redirect()->route("doctor.dashboard")->with("success","Doctor data updated successfully!");
     }
 
     public function appointment(){
         $appointment_Data =  Appointment::query()->where('doctor_id', '=', Auth::user()->doctors->id)->with(['patient'])->get();
-        // dd($appointment_Data);
         return view('doctor.appointments', compact('appointment_Data'));
     }
 

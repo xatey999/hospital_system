@@ -17,12 +17,7 @@ class AppointmentController extends Controller
     public function index($id)
     {
         $doctor_Data = Doctor::with('schedules')->findOrFail($id);
-        
-        // dd($doctor_Data);
         $patient = Patients::all();
-        // dd($doctor_Data, $patient);
-
-
         return view("appointment.appointment", compact('doctor_Data', 'patient'));
     }
 
@@ -35,8 +30,6 @@ class AppointmentController extends Controller
         $appointment = new Appointment();
         $appointment->fill($request->all());
         $appointment->patient_id = Auth::user()->patient->id;
-        // dd($appointment);
-        // $appointment->doctor_id = $request->doctor_id;
         $appointment->save();
         return redirect()->route("doctors.list")->with("success", "Appointment Booked successfull!!");
     }
