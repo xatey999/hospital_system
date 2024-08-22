@@ -16,10 +16,6 @@ Route::get('/', function () {
 });
 
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('/dashboard', function () {
     $user = Auth::user(); // Get the authenticated user
 
@@ -51,12 +47,6 @@ Route::get('/appointment/cancel/{id}',[AppointmentController::class,'cancel'])->
 });
 
 
-
-
-//routes for doctor:
-// Route::get('/doctordashboard', function () {
-//     return view('doctor.dashboard');
-// })->middleware(['auth', 'verified'])->name('doctor.dashboard');
 
 Route::get('/doctordashboard', function () {
     $user = Auth::user(); // Get the authenticated user
