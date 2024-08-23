@@ -48,7 +48,7 @@ Route::get('/appointment/cancel/{id}',[AppointmentController::class,'cancel'])->
 
 
 
-Route::get('/doctordashboard', function () {
+Route::get('/doctor-dashboard', function () {
     $user = Auth::user(); // Get the authenticated user
 
     // Check the role and return the appropriate view
@@ -61,8 +61,8 @@ Route::get('/doctordashboard', function () {
 
 Route::middleware('auth')->group(function () {
 //for doctor's profile
-Route::get('/doctordashboard/profile/{id}', [DoctorController::class,'profile'])->name('doctor.profile');
-Route::post('/doctordashboard/update/{id}', [DoctorController::class,'update'])->name('doctor.update');
+Route::get('/doctor-dashboard/profile/{id}', [DoctorController::class,'profile'])->name('doctor.profile');
+Route::post('/doctor-dashboard/update/{id}', [DoctorController::class,'update'])->name('doctor.update');
 
 
 //for schedules in doctor's view
@@ -80,7 +80,7 @@ Route::get('/doctor_form', [DepartmentController::class, 'index'])->middleware([
 
 Route::post('/doctor/save', [DoctorController::class,'save'])->name('doctor.save');
 
-Route::get('/doctordashboard/edit/{id}', [DoctorController::class,'edit'])->name('doctorprofile.edit');
+Route::get('/doctor-dashboard/edit/{id}', [DoctorController::class,'edit'])->name('doctorprofile.edit');
 });
 
 Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

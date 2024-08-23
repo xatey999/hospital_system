@@ -9,7 +9,7 @@
                     </a> <br>
                     
 
-                    <form method="POST" action="/doctordashboard/update/{{$doctor_Data->id}}" enctype="multipart/form-data">
+                    <form method="POST" action="/doctor-dashboard/update/{{$doctor_Data->id}}" enctype="multipart/form-data">
                         @csrf
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {{-- <div>
