@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('doctor_description');
             $table->string('doctor_phone');
             $table->foreignId('department_id');
-            $table->foreign('department_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('department')->onDelete('cascade');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

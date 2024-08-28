@@ -11,6 +11,7 @@ class Schedule extends Model
 
     protected $table = 'schedule';
     protected $fillable = [
+        'doctor_id',
         'day',
         'start_time',
         'end_time',
