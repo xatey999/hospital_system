@@ -5,13 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DoctorResource\Pages;
 use App\Filament\Resources\DoctorResource\RelationManagers;
 use App\Models\Doctor;
+use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use PHPUnit\Framework\Attributes\Group;
 
 class DoctorResource extends Resource
 {
@@ -23,20 +27,28 @@ class DoctorResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('doctor_description')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('doctor_phone')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
+                Section::make('Doctor')
+                ->schema([
                 Forms\Components\Select::make('department_id')
                     ->relationship('department','name')
                     ->required(),
                 Forms\Components\Select::make('user_id')
-                    ->relationship('user','name')
+                    ->label('Doctor')
+                    ->options(User::where('role', 'doctor')->latest()->pluck('name', 'id'))->label('User')
                     ->required(),
-                    // ->numeric(),
+                    Forms\Components\TextInput::make('doctor_phone')
+                    ->numeric()
+                    ->tel()
+                    ->required()
+                    ->maxLength(255),
+                ])->columns(2),
+
+                Section::make('Description')
+                ->schema([
+                Forms\Components\MarkdownEditor::make('doctor_description')
+                    ->required()
+                    ->maxLength(255),
+                    ])->columns(1),
             ]);
     }
 
@@ -48,13 +60,13 @@ class DoctorResource extends Resource
                     ->label('Name')
                     ->numeric()
                     ->sortable(),
+                    Tables\Columns\TextColumn::make('department.name')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('doctor_description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('doctor_phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('department.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

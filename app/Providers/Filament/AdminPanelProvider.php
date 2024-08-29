@@ -17,6 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Resources\UserResource\Pages\Auth\Register as AuthRegister;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -27,6 +28,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile(isSimple:false)
+            ->registration(AuthRegister::class)
             ->colors([
                 'primary' => Color::Amber,
             ])

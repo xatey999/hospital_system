@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PatientsResource\Pages;
 use App\Filament\Resources\PatientsResource\RelationManagers;
 use App\Models\Patients;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -34,8 +35,8 @@ class PatientsResource extends Resource
                 Forms\Components\TextInput::make('address')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user','name')
+                    Forms\Components\Select::make('user_id')
+                    ->options(User::where('role', 'patient')->latest()->pluck('name', 'id'))->label('User')
                     ->required(),
             ]);
     }

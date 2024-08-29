@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Relationship;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,6 +29,7 @@ class ScheduleResource extends Resource
             ->schema([
                 Forms\Components\Select::make('doctor_id')
                     ->label('Doctor')
+                    ->hidden(fn ()=> Auth::user()->role === 'doctor')
                     ->options(function () {
                         $doctors = Doctor::with('user')->get();
                         return $doctors->pluck('user.name', 'id')->filter(function ($name) {
@@ -55,9 +57,23 @@ class ScheduleResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $userId = Auth::user()->id;
+        
         return $table
+        ->modifyQueryUsing(function (Builder $query) use ($userId) {
+            if (auth()->user()->role === 'admin') {
+                return;
+            }
+            if (auth()->user()->role === 'doctor') {
+                // Doctor sees only their own appointments
+                $query->whereHas('doctor', function (Builder $query) use ($userId) {
+                    $query->where('user_id', $userId);
+                });
+            }
+        })
             ->columns([
                 Tables\Columns\TextColumn::make('doctor.user.name')
+                    ->label('Doctor Name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('day'),
                 Tables\Columns\TextColumn::make('start_time')
