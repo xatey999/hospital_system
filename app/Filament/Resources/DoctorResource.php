@@ -33,8 +33,8 @@ class DoctorResource extends Resource
                     ->relationship('department','name')
                     ->required(),
                 Forms\Components\Select::make('user_id')
-                    ->label('Doctor')
-                    ->options(User::where('role', 'doctor')->latest()->pluck('name', 'id'))->label('User')
+                    ->label('Select Doctor')
+                    ->options(User::where('role', 'doctor')->latest()->pluck('name', 'id'))
                     ->required(),
                     Forms\Components\TextInput::make('doctor_phone')
                     ->numeric()

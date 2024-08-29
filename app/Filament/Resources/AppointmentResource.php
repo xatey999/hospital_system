@@ -36,9 +36,10 @@ class AppointmentResource extends Resource
                     // if (Auth::user()->role === 'doctor'){
                     //     return false;
                     // }
-                    return Auth::user()->role === 'patient';
+                    if (Auth::user()->role === 'patient')
+                    return true;
                 })
-                ->hiddenOn(['edit', Auth::user()->role !== 'admin'])   
+                // ->hiddenOn(['view','edit'])  
                 ->options(function () {
                     $patient = Patients::with('user')->get();
                     return $patient->pluck('user.name', 'id')->filter(function ($name) {
@@ -48,7 +49,10 @@ class AppointmentResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('doctor_id')
                 ->label('Select Doctor')
-                // ->hiddenOn('edit')
+                ->hidden(function (){
+                    return Auth::user()->role === 'patient';
+                })
+                ->hiddenOn(['view','edit'])
                 ->options(function () {
                     $doctor = Doctor::with('user')->get();
                     return $doctor->pluck('user.name', 'id')->filter(function ($name) {
