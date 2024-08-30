@@ -9,6 +9,8 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use App\Filament\Resources\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -71,16 +73,45 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                SelectFilter::make('role')
+                    ->multiple()
+                    ->options([
+                        'admin' => 'Admin',
+                        'patient' => 'Patient',
+                        'doctor' => 'Doctor',
+                    ])->indicator('Role'),
+
+            //     Filter::make('created_at')
+            //         ->form([
+            //             DatePicker::make('from'),
+            //             DatePicker::make('until'),
+            //         ])
+            //         // ...
+            //         ->indicateUsing(function (array $data): array {
+            //             $indicators = [];
+
+            //             if ($data['from'] ?? null) {
+            //                 $indicators[] = Indicator::make('Created from ' . Carbon::parse($data['from'])->toFormattedDateString())
+            //                     ->removeField('from');
+            //             }
+
+            //             if ($data['until'] ?? null) {
+            //                 $indicators[] = Indicator::make('Created until ' . Carbon::parse($data['until'])->toFormattedDateString())
+            //                     ->removeField('until');
+            //             }
+
+            //             return $indicators;
+            //         })
+
+            // ])
+            // ->actions([
+            //     Tables\Actions\ViewAction::make(),
+            //     Tables\Actions\EditAction::make(),
+            // ])
+            // ->bulkActions([
+            //     Tables\Actions\BulkActionGroup::make([
+            //         Tables\Actions\DeleteBulkAction::make(),
+            //     ]),
             ]);
     }
 

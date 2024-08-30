@@ -36,7 +36,7 @@ class AppointmentController extends Controller
 
     public function list()
     {
-        $appointment_Data = Appointment::query()->where('patient_id', '=', Auth::user()->patient->id)->with(['patient','doctors'])->get();
+        $appointment_Data = Appointment::query()->where('patient_id', '=', Auth::user()->patient->id)->with(['patient','doctor'])->get();
         // dd($appointment_Data);
         return view("appointment.myappointments", compact('appointment_Data'));
     }

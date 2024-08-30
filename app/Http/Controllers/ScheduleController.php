@@ -16,7 +16,7 @@ class ScheduleController extends Controller
     public function index()
     {
         //schedules list as per the logged in doctor
-        $schedules = Schedule::query()->where('doctor_id', '=', Auth::user()->doctors->id)->get();
+        $schedules = Schedule::query()->where('doctor_id', '=', Auth::user()->doctor->id)->get();
         return view("doctor.schedules", compact("schedules"));
     }
 
@@ -35,7 +35,7 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         $schedule = new Schedule();
-        $schedule->doctor_id = auth()->user()->doctors->id;
+        $schedule->doctor_id = auth()->user()->doctor->id;
         $schedule->fill($request->all());
         $schedule->save();
         return redirect()->route("schedules.index")->with("success","New schedule added!!");

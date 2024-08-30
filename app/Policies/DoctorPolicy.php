@@ -51,16 +51,16 @@ class DoctorPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Doctor $doctor): bool
-    {
-        //
-    }
+    // public function restore(User $user, Doctor $doctor): bool
+    // {
+    //     //
+    // }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Doctor $doctor): bool
-    {
-        //
-    }
+    // public function forceDelete(User $user, Doctor $doctor): bool
+    // {
+    //     //
+    // }
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\DoctorResource\Pages;
 use App\Filament\Resources\DoctorResource\RelationManagers;
+use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\User;
 use Filament\Forms;
@@ -12,6 +13,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\Column;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -77,7 +79,11 @@ class DoctorResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('department_id')
+                        ->label('Department')
+                        ->multiple()
+                        ->options(Department::pluck('name', 'id')->toArray())
+                        ->indicator('Department')
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

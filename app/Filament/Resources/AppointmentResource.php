@@ -11,6 +11,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,18 +31,12 @@ class AppointmentResource extends Resource
                 Forms\Components\Select::make('patient_id')
                 ->label('Patient Name')
                 ->hidden(function (){ 
-                    // if (Auth::user()->role === 'admin'){
-                    //     return false;
-                    // } 
-                    // if (Auth::user()->role === 'doctor'){
-                    //     return false;
-                    // }
                     if (Auth::user()->role === 'patient')
                     return true;
                 })
                 // ->hiddenOn(['view','edit'])  
                 ->options(function () {
-                    $patient = Patients::with('user')->get();
+                    $patient = Patients::with(['user'])->get();
                     return $patient->pluck('user.name', 'id')->filter(function ($name) {
                         return !is_null($name);
                     })->toArray();

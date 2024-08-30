@@ -51,16 +51,16 @@ class SchedulePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Schedule $schedule): bool
-    {
-        //
-    }
+    // public function restore(User $user, Schedule $schedule): bool
+    // {
+    //     //
+    // }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Schedule $schedule): bool
-    {
-        //
-    }
+    // public function forceDelete(User $user, Schedule $schedule): bool
+    // {
+    //     //
+    // }
 }

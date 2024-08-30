@@ -45,7 +45,7 @@ class DoctorController extends Controller
     }
 
     public function appointment(){
-        $appointment_Data =  Appointment::query()->where('doctor_id', '=', Auth::user()->doctors->id)->with(['patient'])->get();
+        $appointment_Data =  Appointment::query()->where('doctor_id', '=', Auth::user()->doctor->id)->with(['patient'])->get();
         return view('doctor.appointments', compact('appointment_Data'));
     }
 

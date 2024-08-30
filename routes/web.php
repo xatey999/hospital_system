@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
     } else {
         return view('dashboard'); // Return the default dashboard view
     }
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
 //patient's routes:
@@ -57,7 +57,7 @@ Route::get('/doctor-dashboard', function () {
     } else {
         return view('doctor.dashboard'); // Return the doctor's dashboard view
     }
-})->middleware(['auth', 'verified'])->name('doctor.dashboard');
+})->middleware(['auth'])->name('doctor.dashboard');
 
 Route::middleware('auth')->group(function () {
 //for doctor's profile
@@ -76,7 +76,7 @@ Route::get('/appointment/edit/{id}', [DoctorController::class,'reschedulePage'])
 Route::patch('/appointment/reschedule/{id}', [DoctorController::class,'reschedule'])->name('appointment.rescheudle.update');
 
 
-Route::get('/doctor_form', [DepartmentController::class, 'index'])->middleware(['auth', 'verified'])->name('doctor.form');
+Route::get('/doctor_form', [DepartmentController::class, 'index'])->middleware(['auth'])->name('doctor.form');
 
 Route::post('/doctor/save', [DoctorController::class,'save'])->name('doctor.save');
 
