@@ -61,6 +61,7 @@ class Register extends BaseRegister
         return DatePicker::make('date_of_birth')
             ->label('Date of Birth')
             ->required()
+            ->native(false)
             ->hidden(fn (callable $get) => $get('role') !== 'patient');
     }
 

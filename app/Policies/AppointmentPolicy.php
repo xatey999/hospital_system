@@ -38,10 +38,10 @@ class AppointmentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    // public function update(User $user, Appointment $appointment): bool
-    // {
-    //     //
-    // }
+    public function update(User $user, Appointment $appointment): bool
+    {
+        return $user->role === 'patient'|| $user->role === 'admin';
+    }
 
     /**
      * Determine whether the user can delete the model.

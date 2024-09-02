@@ -47,7 +47,7 @@ class DoctorResource extends Resource
 
                 Section::make('Description')
                 ->schema([
-                Forms\Components\MarkdownEditor::make('doctor_description')
+                Forms\Components\RichEditor::make('doctor_description')
                     ->required()
                     ->maxLength(255),
                     ])->columns(1),

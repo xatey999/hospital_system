@@ -74,6 +74,7 @@ class ScheduleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('doctor.user.name')
                     ->label('Doctor Name')
+                    ->hidden(fn () => Auth::user()->role === 'doctor')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('day'),
                 Tables\Columns\TextColumn::make('start_time')

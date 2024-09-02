@@ -25,6 +25,10 @@ class PatientsResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('user_id')
+                    ->label('Select User')
+                    ->options(User::where('role', 'patient')->latest()->pluck('name', 'id'))->label('User')
+                    ->required(),
                 Forms\Components\DatePicker::make('date_of_birth')
                     ->required(),
                 Forms\Components\Select::make('gender')
@@ -36,9 +40,7 @@ class PatientsResource extends Resource
                 Forms\Components\TextInput::make('address')
                     ->required()
                     ->maxLength(255),
-                    Forms\Components\Select::make('user_id')
-                    ->options(User::where('role', 'patient')->latest()->pluck('name', 'id'))->label('User')
-                    ->required(),
+                
             ]);
     }
 
