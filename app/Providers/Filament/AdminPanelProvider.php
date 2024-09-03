@@ -31,6 +31,8 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->profile(isSimple:false)
             ->registration(AuthRegister::class)
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('2s')
             ->colors([
                 'primary' => Color::Fuchsia,
                 'secondary' => Color::Indigo,

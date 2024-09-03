@@ -14,6 +14,8 @@ use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Notifications\DatabaseNotification;
+use Filament\Notifications\Events\DatabaseNotificationsSent;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
@@ -21,6 +23,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+// use Illuminate\Notifications\Notification;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Carbon;
 
 class AppointmentResource extends Resource
@@ -148,7 +152,7 @@ class AppointmentResource extends Resource
                 Tables\Columns\TextColumn::make('patient.user.name')
                     ->label('Patient Name')
                     ->numeric()
-                    ->hidden(fn ()=> Auth::user()->role === 'patient')
+                    ->hidden(fn() => Auth::user()->role === 'patient')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('doctor.user.name')
                     ->label('Doctor Name')
@@ -191,6 +195,15 @@ class AppointmentResource extends Resource
                     })
                     ->action(function ($record, $data) {
                         $record->appointment_date = $data['date'];
+
+                        Notification::make()
+                            ->title('Appointment Rescheduled')
+                            ->body('Your appointment scheduled for ' . $record->appointment_date . ' with Doctor ' . $record->doctor->user->name . ' has been rescheduled for ' . $data['date'] . '. Sorry for the inconvenience. Please visit for the appointment at the provided time. Thank You! ')
+                            ->success()
+                            ->duration(10)
+                            ->sendToDatabase($record->patient->user);
+                        event(new DatabaseNotificationsSent($record->patient->user));
+
                         $record->save();
                     })
                     ->icon('heroicon-m-clock')
