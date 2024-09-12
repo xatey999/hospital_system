@@ -10,9 +10,11 @@ use App\Models\Doctor;
 use App\Models\Patients;
 use App\Models\Schedule;
 use Faker\Core\Color;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\DatabaseNotification;
 use Filament\Notifications\Events\DatabaseNotificationsSent;
@@ -23,9 +25,9 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-// use Illuminate\Notifications\Notification;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Carbon;
+use Symfony\Component\Console\Input\Input;
 
 class AppointmentResource extends Resource
 {
@@ -79,6 +81,7 @@ class AppointmentResource extends Resource
 
                 Forms\Components\DatePicker::make('appointment_date')
                     ->hiddenOn(['edit'])
+                    ->minDate(Carbon::today())
                     ->reactive()
                     ->required(),
 
@@ -96,7 +99,9 @@ class AppointmentResource extends Resource
                                 ->get();
 
                             return $schedules->mapWithKeys(function ($schedule) {
-                                return [$schedule->id => $schedule->start_time . ' - ' . $schedule->end_time];
+                                $formatted_start_time = Carbon::parse($schedule->start_time)->format('g:i A');
+                                $formatted_end_time = Carbon::parse($schedule->end_time)->format('g:i A');
+                                return [$schedule->id => $formatted_start_time . ' - ' . $formatted_end_time];
                             })->toArray();
                         }
 
@@ -189,25 +194,36 @@ class AppointmentResource extends Resource
                     ->form(function ($record) {
                         return [
                             DatePicker::make('date')
+                                ->minDate(Carbon::today())
                                 ->default($record->appointment_date)
                                 ->native(false)
                         ];
                     })
                     ->action(function ($record, $data) {
+                        
+                        $oldDate = $record->appointment_date;
+                        
                         $record->appointment_date = $data['date'];
 
                         Notification::make()
                             ->title('Appointment Rescheduled')
-                            ->body('Your appointment scheduled for ' . $record->appointment_date . ' with Doctor ' . $record->doctor->user->name . ' has been rescheduled for ' . $data['date'] . '. Sorry for the inconvenience. Please visit for the appointment at the provided time. Thank You! ')
+                            ->body('Your appointment scheduled for ' . $oldDate . ' with Doctor ' . $record->doctor->user->name . ' has been rescheduled for ' . $data['date'] . '. Sorry for the inconvenience. Please visit for the appointment at the provided time. Thank You! ')
                             ->success()
                             ->duration(10)
                             ->sendToDatabase($record->patient->user);
                         event(new DatabaseNotificationsSent($record->patient->user));
 
                         $record->save();
+                        
+                        Notification::make()
+                            ->title('Success')
+                            ->body('The appointment has been successfully rescheduled.')
+                            ->success()
+                            ->send();
                     })
                     ->icon('heroicon-m-clock')
                     ->color('info')
+                    
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

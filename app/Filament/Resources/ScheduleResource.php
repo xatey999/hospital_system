@@ -49,9 +49,11 @@ class ScheduleResource extends Resource
                     ])
                     ->required(),
                 Forms\Components\TimePicker::make('start_time')
-                    ->required(),
+                    ->required()
+                    ->withoutSeconds(),
                 Forms\Components\TimePicker::make('end_time')
-                    ->required(),
+                    ->required()
+                    ->withoutSeconds(),
             ]);
     }
 

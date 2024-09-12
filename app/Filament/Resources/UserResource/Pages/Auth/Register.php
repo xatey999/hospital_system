@@ -49,7 +49,6 @@ class Register extends BaseRegister
                 'doctor' => 'Doctor',
                 'patient' => 'Patient',
             ])
-            ->default('patient')
             ->required()
             ->reactive()
             ->afterStateUpdated(fn ($state, callable $set) => $this->updateFormFields($state, $set));
@@ -60,6 +59,7 @@ class Register extends BaseRegister
     {
         return DatePicker::make('date_of_birth')
             ->label('Date of Birth')
+            ->maxDate(today())
             ->required()
             ->native(false)
             ->hidden(fn (callable $get) => $get('role') !== 'patient');
